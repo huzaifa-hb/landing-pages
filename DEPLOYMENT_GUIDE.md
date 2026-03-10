@@ -41,9 +41,8 @@ cd landing-pages
 # 2. Install dependencies
 pnpm install
 
-# 3. Set up environment variables
-cp .env.example .env
-# Edit .env with your values (see Environment Variables section below)
+# 3. Create environment file (see Environment Variables section below)
+# Create a file named .env in the project root with the template provided below
 
 # 4. Push database schema (creates all tables)
 pnpm db:push
@@ -64,11 +63,37 @@ pnpm dev
 
 ## Environment Variables
 
-Copy `.env.example` to `.env` and fill in the values:
+Create a file named `.env` in the project root with the following content. Fill in your actual values for each variable.
 
-```bash
-cp .env.example .env
 ```
+# Database
+# Format: mysql://user:password@host:port/database_name
+DATABASE_URL=
+
+# Security
+# Generate a strong secret: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+# Minimum 32 characters. Changing this invalidates all existing sessions.
+JWT_SECRET=
+
+# OAuth
+VITE_APP_ID=
+OAUTH_SERVER_URL=
+VITE_OAUTH_PORTAL_URL=
+
+# Owner
+# Your Manus OpenID. Grants you admin role automatically on first login.
+OWNER_OPEN_ID=
+
+# Server
+NODE_ENV=production
+# PORT=3000  (optional, defaults to 3000)
+
+# Built-in API (optional, only needed for LLM/storage features)
+# BUILT_IN_FORGE_API_URL=
+# BUILT_IN_FORGE_API_KEY=
+```
+
+### Environment Variable Reference
 
 | Variable | Required | Description |
 |---|---|---|
@@ -77,16 +102,11 @@ cp .env.example .env
 | `VITE_APP_ID` | Yes | OAuth application ID |
 | `OAUTH_SERVER_URL` | Yes | OAuth provider base URL (used server-side) |
 | `VITE_OAUTH_PORTAL_URL` | Yes | OAuth login portal URL (used client-side for redirects) |
-| `OWNER_OPEN_ID` | Yes | Your Manus OpenID, grants you admin role automatically on first login |
+| `OWNER_OPEN_ID` | Yes | Your Manus OpenID for admin access |
 | `NODE_ENV` | Yes | Set to `production` for deployment |
 | `PORT` | No | Server port, defaults to 3000 |
-| `BUILT_IN_FORGE_API_URL` | No | Manus built-in API URL (only needed for LLM or storage features) |
-| `BUILT_IN_FORGE_API_KEY` | No | Manus built-in API key, server-side only |
-
-**Generate a strong JWT_SECRET:**
-```bash
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-```
+| `BUILT_IN_FORGE_API_URL` | No | Manus built-in API URL (only for LLM/storage) |
+| `BUILT_IN_FORGE_API_KEY` | No | Manus built-in API key (server-side only) |
 
 ---
 
@@ -115,7 +135,7 @@ Railway handles Node.js detection, MySQL provisioning, and environment variables
 3. Create a new project and select "Deploy from GitHub"
 4. Add a MySQL service in the Railway dashboard
 5. Copy the `DATABASE_URL` from the MySQL service into your app environment variables
-6. Add all other required environment variables
+6. Add all other required environment variables (see Environment Variables section above)
 7. Set build command: `pnpm install && pnpm build`
 8. Set start command: `NODE_ENV=production node dist/index.js`
 9. Deploy
@@ -127,7 +147,7 @@ Railway handles Node.js detection, MySQL provisioning, and environment variables
 3. Connect your GitHub repository
 4. Set build command: `pnpm install && pnpm build`
 5. Set start command: `NODE_ENV=production node dist/index.js`
-6. Add all environment variables in the Render dashboard
+6. Add all environment variables in the Render dashboard (see Environment Variables section above)
 7. Add a MySQL database service (or use an external provider like PlanetScale)
 8. Deploy
 
@@ -179,9 +199,8 @@ cd landing-pages
 pnpm install
 pnpm build
 
-# 4. Set up environment variables
-cp .env.example .env
-nano .env
+# 4. Create environment file
+# Create a file named .env in the project root (see Environment Variables section above)
 
 # 5. Push database schema
 pnpm db:push

@@ -61,7 +61,7 @@ cd landing-pages
 pnpm install
 
 # Create environment file (see Environment Variables section below)
-# Create a file named .env in the project root with the variables listed below
+# Create a file named .env in the project root
 
 # Push database schema (creates all tables)
 pnpm db:push
@@ -85,7 +85,7 @@ pnpm dev
 
 ## Environment Variables
 
-Create a file named `.env` in the project root with these variables:
+Create a file named `.env` in the project root with the following content. Fill in your actual values for each variable.
 
 ```
 # Database
@@ -93,7 +93,7 @@ Create a file named `.env` in the project root with these variables:
 DATABASE_URL=
 
 # Security
-# Generate: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+# Generate a strong secret: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 # Minimum 32 characters. Changing this invalidates all existing sessions.
 JWT_SECRET=
 
@@ -115,17 +115,19 @@ NODE_ENV=production
 # BUILT_IN_FORGE_API_KEY=
 ```
 
+### Environment Variable Reference
+
 | Variable | Required | Description |
 |---|---|---|
-| `DATABASE_URL` | Yes | MySQL connection string |
-| `JWT_SECRET` | Yes | Random secret for session signing, min 32 chars |
+| `DATABASE_URL` | Yes | MySQL connection string: `mysql://user:password@host:port/db` |
+| `JWT_SECRET` | Yes | Random secret for session signing, minimum 32 characters |
 | `VITE_APP_ID` | Yes | OAuth application ID |
-| `OAUTH_SERVER_URL` | Yes | OAuth provider base URL (server-side) |
-| `VITE_OAUTH_PORTAL_URL` | Yes | OAuth login portal URL (client-side redirect) |
+| `OAUTH_SERVER_URL` | Yes | OAuth provider base URL (used server-side) |
+| `VITE_OAUTH_PORTAL_URL` | Yes | OAuth login portal URL (used client-side for redirects) |
 | `OWNER_OPEN_ID` | Yes | Your Manus OpenID for admin access |
 | `NODE_ENV` | Yes | Set to `production` for deployment |
 | `PORT` | No | Server port, defaults to 3000 |
-| `BUILT_IN_FORGE_API_URL` | No | Manus built-in API URL |
+| `BUILT_IN_FORGE_API_URL` | No | Manus built-in API URL (only for LLM/storage) |
 | `BUILT_IN_FORGE_API_KEY` | No | Manus built-in API key (server-side only) |
 
 ---
@@ -183,9 +185,8 @@ dist/                  # Compiled production build
   public/              # Frontend static files
 
 DEPLOYMENT_GUIDE.md    # Deployment instructions for all platforms
-EXPORT_README.md       # Setup guide
-package.json           # Dependencies and scripts
 README.md              # This file
+package.json           # Dependencies and scripts
 ```
 
 ---
